@@ -1,2 +1,0 @@
-# Gamers-Gazette-frontend-react
- 
