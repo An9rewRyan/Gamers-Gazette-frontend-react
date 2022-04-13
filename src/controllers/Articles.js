@@ -1,9 +1,7 @@
-import './App.css';
+import '../styles/App.css';
 import React from 'react';
 
-const PORT = process.env.PORT || 3000
-console.log(PORT)
-class ArticlesApp extends React.Component {
+class Articles extends React.Component {
    
   constructor(props) {
       super(props);
@@ -13,7 +11,6 @@ class ArticlesApp extends React.Component {
           DataisLoaded: false
       };
   }
-
   componentDidMount() {
       fetch(
 `https://api-gamersgazette.herokuapp.com/api/v1/articles/`)
@@ -60,4 +57,4 @@ class ArticlesApp extends React.Component {
     }
 }
 
-export default ArticlesApp;
+export default Articles;
