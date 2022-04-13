@@ -24,6 +24,7 @@ class ArticlesApp extends React.Component {
                   DataisLoaded: true
               });
           })
+          .catch((err)=>console.log(err))
   }
   render() {
       const { DataisLoaded, items } = this.state;
