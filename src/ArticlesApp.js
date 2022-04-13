@@ -1,6 +1,8 @@
-import '../styles/styles.scss';
+import './App.css';
 import React from 'react';
 
+const PORT = process.env.PORT || 3000
+console.log(PORT)
 class ArticlesApp extends React.Component {
    
   constructor(props) {
@@ -32,15 +34,17 @@ class ArticlesApp extends React.Component {
       <div className = "App">
           <h1> Fetch data from an api in react </h1>  {
               items.map((item) => ( 
-            <div key = { item.article_id } className = "details_content">
-                <div className = "post">
-                    <h2 className = "post_title">{ item.title }</h2>
-                    <div> {item.site_alias} </div>
-                    <div className = "date_time"> { item.pub_date }</div>
-                    <div>Image url: {item.image_url}</div>
-                    <div><br></br>{ item.content }<a href={item.src_link}>Source link</a></div>
-                    <br></br>
-                </div>
+            <div class = "details_content">
+            <div class = "post">
+              <ol key = { item.article_id } >
+              <h2 class = "post_title">{ item.title }</h2>
+              <div> {item.site_alias} </div>
+              <div class = "date_time"> { item.pub_date }</div>
+              <div>Image url: {item.image_url}</div>
+              <div><br></br>{ item.content }<a href={item.src_link}>Source link</a></div>
+              <br></br>
+                </ol>
+            </div>
             </div>
               ))
           }
