@@ -4,8 +4,7 @@ import {
     Route
   } from "react-router-dom";
 import Articles from "../controllers/Articles";
-import Signup from "../controllers/Signup";
-import NotFound from "../utils/Errors";
+import SignForm from "../controllers/Signup";
 
 const Routing = () => {
     return(
@@ -14,8 +13,7 @@ const Routing = () => {
           {/* <Route path="/articles/*"  exact component={ArticlesApp} /> */}
           <Route exact path="/"  element={<Articles />} />
           <Route exact path="/articles/"  element={<Articles />} />
-          <Route exact path="/signup/"  element={<Signup />} />
-          <Route component={NotFound} />
+          <Route exact path="/signup/"  element={<SignForm />} />
           {/* <Route exact path="games/" element={<GamesApp />}/> */}
         </Routes>
       </Router>
