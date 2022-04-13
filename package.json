@@ -4,8 +4,8 @@
   "description": "Definetly best react frontend for spa!",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --open --config webpack.dev.js --port 3000",
-    "build": "webpack --config webpack.prod.js"
+    "start": "webpack serve --open --config webpack.dev.js",
+    "build": "webpack serve --open --config webpack.prod.js"
   },
   "repository": {
     "type": "git",
