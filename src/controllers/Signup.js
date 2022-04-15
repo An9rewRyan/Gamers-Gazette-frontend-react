@@ -18,7 +18,7 @@ class SiginForm extends React.Component {
       this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-      let session_cookie = cookies.get('sesson_token')
+      let session_cookie = cookies.get('session_token')
       if (session_cookie){
         fetch(
           `https://api-gamersgazette.herokuapp.com/auth/me`, {
