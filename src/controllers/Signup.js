@@ -5,7 +5,7 @@ import { Navigate
 class SiginForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {name: '', pass: '', bdate: '', email: '', res: null, error: null, checking: null };
+      this.state = {name: '', pass: '', bdate: '', email: '', res: null, error: null, checking: null, already_logged_in: null};
       this.SignedUp = false
   
       this.handleChangeN = this.handleChangeN.bind(this);
@@ -13,6 +13,23 @@ class SiginForm extends React.Component {
       this.handleChangeE = this.handleChangeE.bind(this);
       this.handleChangeD = this.handleChangeD.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    componentDidMount() {
+      fetch(
+        `https://api-gamersgazette.herokuapp.com/auth/me`)
+          .then((res) =>{
+            console.log(res.status)
+            if (res.status != '400' && res.status != 401){
+              this.setState({already_logged_in: true})
+            }
+          })
+          // .then((json) => {
+          //   this.setState({
+          //   items: json,
+          //   DataisLoaded: true
+          // });
+          // })
+          .catch((err)=>console.log(err))
     }
 
     handleChangeN(event) {
@@ -60,7 +77,7 @@ class SiginForm extends React.Component {
       return (
         <div>
         {error && <p>{error.message}</p>}
-        {res && (
+        {(res || already_logged_in) && (
           <Navigate to="/articles" replace={true} />
         )}
         <form onSubmit={this.handleSubmit}>
