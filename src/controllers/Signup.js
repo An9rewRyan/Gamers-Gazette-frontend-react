@@ -8,7 +8,7 @@ import { Navigate
 class SiginForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {name: '', pass: '', bdate: '', email: '', res: null, error: null, checking: null, already_logged_in: null};
+      this.state = {name: '', pass: '', bdate: '', email: '', resp: null, error: null, checking: null, already_logged_in: null};
       this.SignedUp = false
   
       this.handleChangeN = this.handleChangeN.bind(this);
@@ -67,15 +67,13 @@ class SiginForm extends React.Component {
             },
             body: JSON.stringify(user)
             })
-            .then((res) => {
-              res.json()
-            })
+            .then((res) => res.json())
             .then((json) =>{
                 console.log(json)
                 console.log("sucessfully signed up!")  
                 const cookies = new Cookies();
                 cookies.set(json.Name, json.Value, json.Expires);
-                this.setState({ res });
+                this.setState({ resp: json });
             })
             .catch((err)=>{
                 console.log("Got error while signing up: "+err)
@@ -84,11 +82,11 @@ class SiginForm extends React.Component {
         event.preventDefault();
         }
     render() {
-    let { res, error, checking, already_logged_in } = this.state;
+    let { resp, error, checking, already_logged_in } = this.state;
       return (
         <div>
         {error && <p>{error.message}</p>}
-        {(res || already_logged_in) && (
+        {(resp || already_logged_in) && (
           <Navigate to="/articles" replace={true} />
         )}
         <form onSubmit={this.handleSubmit}>
