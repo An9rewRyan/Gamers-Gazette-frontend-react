@@ -73,7 +73,7 @@ class SiginForm extends React.Component {
         event.preventDefault();
         }
     render() {
-    let { res, error, checking } = this.state;
+    let { res, error, checking, already_logged_in } = this.state;
       return (
         <div>
         {error && <p>{error.message}</p>}
