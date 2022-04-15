@@ -17,25 +17,25 @@ class SiginForm extends React.Component {
       this.handleChangeD = this.handleChangeD.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
-    componentDidMount() {
-      fetch(
-        `https://api-gamersgazette.herokuapp.com/auth/me`, {
-          method: 'POST',
-          })
-          .then((res) =>{
-            console.log(res.status)
-            if (res.status != '400' && res.status != 401){
-              this.setState({already_logged_in: true})
-            }
-          })
-          // .then((json) => {
-          //   this.setState({
-          //   items: json,
-          //   DataisLoaded: true
-          // });
-          // })
-          .catch((err)=>console.log(err))
-    }
+    // componentDidMount() {
+    //   fetch(
+    //     `https://api-gamersgazette.herokuapp.com/auth/me`, {
+    //       method: 'POST',
+    //       })
+    //       .then((res) =>{
+    //         console.log(res.status)
+    //         if (res.status != '400' && res.status != 401){
+    //           this.setState({already_logged_in: true})
+    //         }
+    //       })
+    //       // .then((json) => {
+    //       //   this.setState({
+    //       //   items: json,
+    //       //   DataisLoaded: true
+    //       // });
+    //       // })
+    //       .catch((err)=>console.log(err))
+    // }
 
     handleChangeN(event) {
       this.setState({name: event.target.value});
@@ -67,10 +67,14 @@ class SiginForm extends React.Component {
             },
             body: JSON.stringify(user)
             })
-            .then((res) =>{
+            .then((res) => {
+              res.json()
+            })
+            .then((json) =>{
+                console.log(json)
                 console.log("sucessfully signed up!")  
                 const cookies = new Cookies();
-                cookies.set('myCat', 'Pacman', { path: '/' });
+                cookies.set(json.Name, json.Value, json.Expires);
                 this.setState({ res });
             })
             .catch((err)=>{
