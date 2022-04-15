@@ -1,6 +1,9 @@
 import React from 'react';
 import { Navigate
  } from 'react-router-dom';
+ import Cookies from 'universal-cookie';
+
+
 
 class SiginForm extends React.Component {
     constructor(props) {
@@ -66,6 +69,8 @@ class SiginForm extends React.Component {
             })
             .then((res) =>{
                 console.log("sucessfully signed up!")  
+                const cookies = new Cookies();
+                cookies.set('myCat', 'Pacman', { path: '/' });
                 this.setState({ res });
             })
             .catch((err)=>{
