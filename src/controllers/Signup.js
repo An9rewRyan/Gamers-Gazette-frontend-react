@@ -3,7 +3,7 @@ import { Navigate
  } from 'react-router-dom';
  import Cookies from 'universal-cookie';
 
-
+const cookies = new Cookies();
 
 class SiginForm extends React.Component {
     constructor(props) {
@@ -17,25 +17,26 @@ class SiginForm extends React.Component {
       this.handleChangeD = this.handleChangeD.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
-    // componentDidMount() {
-    //   fetch(
-    //     `https://api-gamersgazette.herokuapp.com/auth/me`, {
-    //       method: 'POST',
-    //       })
-    //       .then((res) =>{
-    //         console.log(res.status)
-    //         if (res.status != '400' && res.status != 401){
-    //           this.setState({already_logged_in: true})
-    //         }
-    //       })
-    //       // .then((json) => {
-    //       //   this.setState({
-    //       //   items: json,
-    //       //   DataisLoaded: true
-    //       // });
-    //       // })
-    //       .catch((err)=>console.log(err))
-    // }
+    componentDidMount() {
+      let session_cookie = cookies.get('sesson_token')
+      if (session_cookie){
+        fetch(
+          `https://api-gamersgazette.herokuapp.com/auth/me`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'text/plain'
+            },
+              body: JSON.stringify(session_cookie)
+            })
+              .then((res) =>{
+                console.log(res.status)
+                if (res.status != '400' && res.status != 401){
+                  this.setState({already_logged_in: true})
+                }
+              })
+              .catch((err)=>console.log(err))
+        }
+    }
 
     handleChangeN(event) {
       this.setState({name: event.target.value});
@@ -71,7 +72,6 @@ class SiginForm extends React.Component {
             .then((json) =>{
                 console.log(json)
                 console.log("sucessfully signed up!")  
-                const cookies = new Cookies();
                 cookies.set(json.Name, json.Value, json.Expires);
                 this.setState({ resp: json });
             })
