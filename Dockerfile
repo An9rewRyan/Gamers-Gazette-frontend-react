@@ -6,5 +6,4 @@ RUN npm install
 RUN npm run build
 RUN ls
 RUN npm install -g serve
-RUN npm install universal-cookie
 CMD serve -s build
