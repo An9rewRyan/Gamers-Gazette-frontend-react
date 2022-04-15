@@ -19,6 +19,7 @@ class SiginForm extends React.Component {
     }
     componentDidMount() {
       let session_cookie = cookies.get('session_token')
+      console.log(session_cookie)
       if (session_cookie){
         fetch(
           `https://api-gamersgazette.herokuapp.com/auth/me`, {
@@ -26,7 +27,7 @@ class SiginForm extends React.Component {
             headers: {
               'Content-Type': 'text/plain'
             },
-              body: JSON.stringify(session_cookie)
+              body: JSON.stringify({session_cookie:session_cookie})
             })
               .then((res) =>{
                 console.log(res.status)
