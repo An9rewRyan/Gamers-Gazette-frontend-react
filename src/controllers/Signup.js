@@ -16,7 +16,9 @@ class SiginForm extends React.Component {
     }
     componentDidMount() {
       fetch(
-        `https://api-gamersgazette.herokuapp.com/auth/me`)
+        `https://api-gamersgazette.herokuapp.com/auth/me`, {
+          method: 'POST',
+          })
           .then((res) =>{
             console.log(res.status)
             if (res.status != '400' && res.status != 401){
