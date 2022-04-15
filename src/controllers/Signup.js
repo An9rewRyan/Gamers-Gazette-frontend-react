@@ -67,10 +67,7 @@ class SiginForm extends React.Component {
             },
             body: JSON.stringify(user)
             })
-            .then((res) => {
-              console.log(res)
-              res.json()
-            })
+            .then((res) => res.json())
             .then((json) =>{
                 console.log(json)
                 console.log("sucessfully signed up!")  
