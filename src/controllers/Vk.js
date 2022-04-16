@@ -103,12 +103,6 @@ class VkForm extends React.Component {
               Password:
               <input type="password" value={this.state.pass} onChange={this.handleChangeP} />
             </label>
-            {!this.state.email &&(
-            <label>
-              Email:
-              <input type="text" value={this.state.email} onChange={this.handleChangeE} />
-            </label>
-            )}
             {!checking && (
               <div>
                 <input type="submit" value="Submit" />
