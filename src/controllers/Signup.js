@@ -15,7 +15,7 @@ class SiginForm extends React.Component {
       this.handleChangeP = this.handleChangeP.bind(this);
       this.handleChangeE = this.handleChangeE.bind(this);
       this.handleChangeD = this.handleChangeD.bind(this);
-      this.logInVk = this.logInVk.bind(this);
+      // this.logInVk = this.logInVk.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
@@ -40,15 +40,15 @@ class SiginForm extends React.Component {
         }
     }
 
-    logInVk(event) {
-      let clientID = "8134856"
-      let scope = "account+email+bdate"
-      let redirectURI = "https://gamersgazette.herokuapp.com/signup/vk"
+    // logInVk(event) {
+    //   let clientID = "8134856"
+    //   let scope = "account+email+bdate"
+    //   let redirectURI = "https://gamersgazette.herokuapp.com/signup/vk"
 
-      let link = `https://oauth.vk.com/authorize?response_type=code&client_id=${clientID}&redirect_uri=${redirectURI}&scope=${scope}`
-      console.log(link)
-      this.setState({soc_auth_link: link})
-    }
+    //   let link = `https://oauth.vk.com/authorize?response_type=code&client_id=${clientID}&redirect_uri=${redirectURI}&scope=${scope}`
+    //   console.log(link)
+    //   this.setState({soc_auth_link: link})
+    // }
 
     handleChangeN(event) {
       this.setState({name: event.target.value});
@@ -124,8 +124,8 @@ class SiginForm extends React.Component {
             </label>
             {!checking && (
               <div>
-                <button type="button" onClick={this.logInVk}>Войти на вк</button>
-                {/* <a href = "https://api-gamersgazette.herokuapp.com/socailaith/vk">Войти через ВК</a> */}
+                {/* <button type="button" onClick={this.logInVk}>Войти на вк</button> */}
+                <a href = "https://oauth.vk.com/authorize?response_type=code&client_id=8134856&redirect_uri=https://gamersgazette.herokuapp.com/signup/vk&scope=account+email+bdate" target="_blank">Войти через ВК</a>
                 <input type="submit" value="Submit" />
               </div>
             )}
