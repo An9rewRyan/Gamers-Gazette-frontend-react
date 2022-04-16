@@ -5,7 +5,7 @@ import { Navigate
 
 const cookies = new Cookies();
 
-class SiginForm extends React.Component {
+class VkForm extends React.Component {
     constructor(props) {
       super(props);
       this.state = {name: null, email:null, bdate:null, pass:null, checking: null, already_logged_in: null};
@@ -123,4 +123,4 @@ class SiginForm extends React.Component {
       }
     }
 
-export default SiginForm;
+export default VkForm;

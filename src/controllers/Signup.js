@@ -15,6 +15,7 @@ class SiginForm extends React.Component {
       this.handleChangeP = this.handleChangeP.bind(this);
       this.handleChangeE = this.handleChangeE.bind(this);
       this.handleChangeD = this.handleChangeD.bind(this);
+      this.logInVk = this.logInVk.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
@@ -45,6 +46,7 @@ class SiginForm extends React.Component {
       let redirectURI = "https://gamersgazette.herokuapp.com/signup/vk"
 
       let link = `https://oauth.vk.com/authorize?response_type=code&client_id=${clientID}&redirect_uri=${redirectURI}&scope=${scope}`
+      console.log(link)
       this.setState({soc_auth_link: link})
     }
 
