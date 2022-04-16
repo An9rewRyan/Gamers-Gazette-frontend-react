@@ -8,7 +8,7 @@ const cookies = new Cookies();
 class VkForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {name: null, email:null, bdate:null, pass:null, checking: null, already_logged_in: null};
+      this.state = {name: null, email:null, email_is_empty: true, bdate:null, pass:null, checking: null, already_logged_in: null};
       this.SignedUp = false
 
       this.handleChangeP = this.handleChangeP.bind(this);
@@ -48,6 +48,9 @@ class VkForm extends React.Component {
                   .then((res) => res.json())
                   .then((json) =>{
                       console.log(json)
+                      if (json.email != ""){
+                        this.setState({email_is_empty: false})
+                      }
                       this.setState({ name: json.username, email: json.email, bdate: json.birthdate });
                   })
                   .catch((err)=>{
@@ -96,7 +99,7 @@ class VkForm extends React.Component {
         event.preventDefault();
         }
     render() {
-      let { resp, error, checking, already_logged_in} = this.state;
+      let { resp, error, email_is_empty, checking, already_logged_in} = this.state;
         return (
           <div>
           {error && <p>{error.message}</p>}
@@ -108,7 +111,7 @@ class VkForm extends React.Component {
               Password:
               <input type="password" value={this.state.pass} onChange={this.handleChangeP} />
             </label>
-            {this.state.email==="" && (
+            {email_is_empty===false && (
             <label>
                 Email:
                 <input type="text" value={this.state.email} onChange={this.handleChangeE} />
