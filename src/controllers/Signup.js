@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigate
  } from 'react-router-dom';
  import Cookies from 'universal-cookie';
+ import { Redirect } from 'react-router';
 
 const cookies = new Cookies();
 
