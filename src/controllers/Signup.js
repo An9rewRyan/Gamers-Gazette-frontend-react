@@ -42,7 +42,7 @@ class SiginForm extends React.Component {
 
     logInVk(event) {
       let clientID = "8134856"
-      let scope = "account + email + bdate"
+      let scope = "account+email+bdate"
       let redirectURI = "https://gamersgazette.herokuapp.com/signup/vk"
 
       let link = `https://oauth.vk.com/authorize?response_type=code&client_id=${clientID}&redirect_uri=${redirectURI}&scope=${scope}`
@@ -102,7 +102,7 @@ class SiginForm extends React.Component {
             <Navigate to="/articles" replace={true} />
           )}
           {soc_auth_link && (
-            <Navigate to={soc_auth_link} replace={true} />
+            <Navigate to={{ pathname: soc_auth_link }} replace={true} />
           )}
           <form onSubmit={this.handleSubmit}>
             <label>
