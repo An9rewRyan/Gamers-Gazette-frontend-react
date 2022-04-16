@@ -13,6 +13,7 @@ class VkForm extends React.Component {
 
       this.handleChangeP = this.handleChangeP.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleChangeE = this.handleChangeE.bind(this);
     }
     componentDidMount() {
       let link = `https://api-gamersgazette.herokuapp.com/socialauth/vk/me`
@@ -59,6 +60,9 @@ class VkForm extends React.Component {
     handleChangeP(event) {
       this.setState({pass: event.target.value});
     }
+    handleChangeE(event) {
+        this.setState({email: event.target.value});
+      }
   
     handleSubmit(event) {
         this.setState({ checking: true });
@@ -104,6 +108,12 @@ class VkForm extends React.Component {
               Password:
               <input type="password" value={this.state.pass} onChange={this.handleChangeP} />
             </label>
+            {this.state.email==="" && (
+            <label>
+                Email:
+                <input type="text" value={this.state.email} onChange={this.handleChangeE} />
+            </label>
+            )}
             {!checking && (
               <div>
                 <input type="submit" value="Submit" />
