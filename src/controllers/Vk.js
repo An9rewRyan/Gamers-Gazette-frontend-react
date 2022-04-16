@@ -11,10 +11,7 @@ class VkForm extends React.Component {
       this.state = {name: null, email:null, bdate:null, pass:null, checking: null, already_logged_in: null};
       this.SignedUp = false
 
-      this.handleChangeN = this.handleChangeN.bind(this);
       this.handleChangeP = this.handleChangeP.bind(this);
-      this.handleChangeE = this.handleChangeE.bind(this);
-      this.handleChangeD = this.handleChangeD.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
