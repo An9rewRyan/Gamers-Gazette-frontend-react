@@ -102,7 +102,7 @@ class SiginForm extends React.Component {
             <Navigate to="/articles" replace={true} />
           )}
           {soc_auth_link && (
-            <Navigate push to={{soc_auth_link}} replace={true}/>
+            <Navigate to={soc_auth_link}/>
           )}
           <form onSubmit={this.handleSubmit}>
             <label>
