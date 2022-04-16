@@ -14,6 +14,7 @@ const Routing = () => {
           <Route exact path="/"  element={<Articles />} />
           <Route exact path="/articles/"  element={<Articles />} />
           <Route exact path="/signup/"  element={<SignForm />} />
+          <Route exact path="/signup/vk"  element={<SignForm />} />
           {/* <Route exact path="games/" element={<GamesApp />}/> */}
         </Routes>
       </Router>

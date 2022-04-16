@@ -8,7 +8,7 @@ const cookies = new Cookies();
 class SiginForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {name: '', pass: '', bdate: '', email: '', resp: null, error: null, checking: null, already_logged_in: null, soc_auth_link: null};
+      this.state = {name: null, email:null, bdate:null, pass:null, checking: null, already_logged_in: null};
       this.SignedUp = false
 
       this.handleChangeN = this.handleChangeN.bind(this);
@@ -18,6 +18,7 @@ class SiginForm extends React.Component {
       this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
+      let link = `https://api-gamersgazette.herokuapp.com/socialauth/vk/me`
       let session_cookie = cookies.get('session_token')
       console.log(session_cookie)
       if (session_cookie){
@@ -37,28 +38,29 @@ class SiginForm extends React.Component {
               })
               .catch((err)=>console.log(err))
         }
-    }
+        if (!this.state.already_logged_in){
+            fetch(
+               link, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'text/plain'
+                  },
+                    body: JSON.stringify({url_with_code:window.location.href})
+                  })
+                  .then((res) => res.json())
+                  .then((json) =>{
+                      console.log(json)
+                      this.setState({ name: json.username, email: json.email, bdate: json.birthdate });
+                  })
+                  .catch((err)=>{
+                      console.log("Got error while logging in by vk: "+err)
+                      this.setState({ err });
+                      })
+                    }
+                }
 
-    logInVk(event) {
-      let clientID = "8134856"
-      let scope = "account + email + bdate"
-      let redirectURI = "https://gamersgazette.herokuapp.com/signup/vk"
-
-      let link = `https://oauth.vk.com/authorize?response_type=code&client_id=${clientID}&redirect_uri=${redirectURI}&scope=${scope}`
-      this.setState({soc_auth_link: link})
-    }
-
-    handleChangeN(event) {
-      this.setState({name: event.target.value});
-    }
     handleChangeP(event) {
       this.setState({pass: event.target.value});
-    }
-    handleChangeE(event) {
-        this.setState({email: event.target.value});
-    }
-    handleChangeD(event) {
-        this.setState({bdate: event.target.value});
     }
   
     handleSubmit(event) {
@@ -92,38 +94,26 @@ class SiginForm extends React.Component {
         event.preventDefault();
         }
     render() {
-      let { resp, error, checking, already_logged_in, soc_auth_link } = this.state;
+      let { resp, error, checking, already_logged_in} = this.state;
         return (
           <div>
           {error && <p>{error.message}</p>}
           {(resp || already_logged_in) && (
             <Navigate to="/articles" replace={true} />
           )}
-          {soc_auth_link && (
-            <Navigate to={soc_auth_link} replace={true} />
-          )}
           <form onSubmit={this.handleSubmit}>
-            <label>
-              Name:
-              <input type="text" value={this.state.name} onChange={this.handleChangeN} />
-            </label>
-            <br></br>
             <label>
               Password:
               <input type="password" value={this.state.pass} onChange={this.handleChangeP} />
             </label>
+            {!this.state.email &&(
             <label>
               Email:
               <input type="text" value={this.state.email} onChange={this.handleChangeE} />
             </label>
-            <label>
-              Birthdate:
-              <input type="date" value={this.state.bdate} onChange={this.handleChangeD} />
-            </label>
+            )}
             {!checking && (
               <div>
-                <button type="button" onClick={this.logInVk}>Войти на вк</button>
-                {/* <a href = "https://api-gamersgazette.herokuapp.com/socailaith/vk">Войти через ВК</a> */}
                 <input type="submit" value="Submit" />
               </div>
             )}
