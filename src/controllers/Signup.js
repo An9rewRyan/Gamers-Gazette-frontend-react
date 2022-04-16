@@ -2,7 +2,6 @@ import React from 'react';
 import { Navigate
  } from 'react-router-dom';
  import Cookies from 'universal-cookie';
- import { Redirect } from 'react-router';
 
 const cookies = new Cookies();
 
@@ -103,7 +102,7 @@ class SiginForm extends React.Component {
             <Navigate to="/articles" replace={true} />
           )}
           {soc_auth_link && (
-            <Redirect push to={{soc_auth_link}} />
+            <Navigate push to={{soc_auth_link}} replace={true}/>
           )}
           <form onSubmit={this.handleSubmit}>
             <label>
