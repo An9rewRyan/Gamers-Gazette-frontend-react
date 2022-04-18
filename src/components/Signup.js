@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate
  } from 'react-router-dom';
- import Cookies from 'universal-cookie';
+import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
@@ -40,16 +40,6 @@ class SiginForm extends React.Component {
         }
     }
 
-    // logInVk(event) {
-    //   let clientID = "8134856"
-    //   let scope = "account+email+bdate"
-    //   let redirectURI = "https://gamersgazette.herokuapp.com/signup/vk"
-
-    //   let link = `https://oauth.vk.com/authorize?response_type=code&client_id=${clientID}&redirect_uri=${redirectURI}&scope=${scope}`
-    //   console.log(link)
-    //   this.setState({soc_auth_link: link})
-    // }
-
     handleChangeN(event) {
       this.setState({name: event.target.value});
     }
@@ -84,7 +74,7 @@ class SiginForm extends React.Component {
             .then((json) =>{
                 console.log(json)
                 console.log("sucessfully signed up!")  
-                cookies.set(json.Name, json.Value, json.Expires);
+                cookies.set(json.Name, json.Value, {expires: json.Expires});
                 this.setState({ resp: json });
             })
             .catch((err)=>{
