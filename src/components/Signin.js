@@ -8,7 +8,7 @@ const cookies = new Cookies();
 class SignInForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {name: '', pass: '', bdate: '', email: '', resp: null, error: null, checking: null, already_logged_in: null, soc_auth_link: null};
+      this.state = {name: '', session_checked: null, pass: '', bdate: '', email: '', resp: null, error: null, checking: null, already_logged_in: null, soc_auth_link: null};
       this.SignedUp = false
 
       this.handleChangeN = this.handleChangeN.bind(this);
@@ -32,7 +32,9 @@ class SignInForm extends React.Component {
                 console.log(res.status)
                 if (res.status != 400 && res.status != 401){
                   this.setState({already_logged_in: true})
+                  return
                 }
+                this.setState({session_checked: true})
               })
               .catch((err)=>console.log(err))
         }
@@ -89,7 +91,7 @@ class SignInForm extends React.Component {
         }
 
     render() {
-      let { resp, error, checking, already_logged_in, soc_auth_link } = this.state;
+      let { resp, error, checking, already_logged_in, soc_auth_link, session_checked } = this.state;
         return (
           <div>
           {error && <p>{error}</p>}
@@ -99,6 +101,7 @@ class SignInForm extends React.Component {
           {soc_auth_link && (
             <Navigate to={soc_auth_link}/>
           )}
+          {session_checked && (
           <form onSubmit={this.handleSubmit}>
             <label>
               Name:
@@ -116,6 +119,7 @@ class SignInForm extends React.Component {
               </div>
             )}
           </form>
+          )}
           </div>
         );
       }

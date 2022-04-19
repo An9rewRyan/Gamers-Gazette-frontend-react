@@ -24,9 +24,7 @@ class Articles extends React.Component {
           .catch((err)=>console.log(err))
   }
   render() {
-      const { DataisLoaded, items } = this.state;
-      if (!DataisLoaded) return <div>
-          <h1> Pleses wait some time.... </h1> </div> ;
+      const { items } = this.state;
       if (items != null){
       return (
       <div className = "App">
