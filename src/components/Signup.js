@@ -77,7 +77,7 @@ class SignupForm extends React.Component {
                 console.log("sucessfully signed up!")  
                 let d = new Date();
                 d.setTime(d.getTime() + (30*60000));
-                cookies.set(json.Name, json.Value, {expires: d});
+                cookies.set(json.Name, json.Value, {expires: d, path: "/"});
                 this.setState({ resp: json });
             })
             .catch((err)=>{
