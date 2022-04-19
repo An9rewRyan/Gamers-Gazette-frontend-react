@@ -62,6 +62,7 @@ class SignupForm extends React.Component {
             email : this.state.email,
             role : 'user',
         }
+        console.log(user)
         fetch(
         `https://api-gamersgazette.herokuapp.com/auth/signup`, {
             method: 'POST',
