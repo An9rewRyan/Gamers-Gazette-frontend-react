@@ -1,23 +1,24 @@
 import React from 'react';
 import { Navigate
  } from 'react-router-dom';
- import Cookies from 'universal-cookie';
+import Cookies from 'universal-cookie';
 
- const cookies = new Cookies();
- 
-class VkForm extends React.Component {
+const cookies = new Cookies();
+
+class SiginForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {name: null, email:null, email_is_empty: true, bdate:null, pass:null, checking: null, already_logged_in: null};
+      this.state = {name: '', pass: '', bdate: '', email: '', resp: null, error: null, checking: null, already_logged_in: null, soc_auth_link: null};
       this.SignedUp = false
 
+      this.handleChangeN = this.handleChangeN.bind(this);
       this.handleChangeP = this.handleChangeP.bind(this);
-      this.handleSubmit = this.handleSubmit.bind(this);
       this.handleChangeE = this.handleChangeE.bind(this);
+      this.handleChangeD = this.handleChangeD.bind(this);
+      this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
-      let link = `https://api-gamersgazette.herokuapp.com/socialauth/vk/me`
       let session_cookie = cookies.get('session_token')
       console.log(session_cookie)
       if (session_cookie){
@@ -37,36 +38,20 @@ class VkForm extends React.Component {
               })
               .catch((err)=>console.log(err))
         }
-        if (!this.state.already_logged_in){
-            fetch(
-               link, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'text/plain'
-                  },
-                    body: JSON.stringify({url_with_code:window.location.href})
-                  })
-                  .then((res) => res.json())
-                  .then((json) =>{
-                      console.log(json)
-                      if (json.email != ""){
-                        this.setState({email_is_empty: false})
-                      }
-                      this.setState({ name: json.username, email: json.email, bdate: json.birthdate });
-                  })
-                  .catch((err)=>{
-                      console.log("Got error while logging in by vk: "+err)
-                      this.setState({ err });
-                      })
-                    }
-                }
+    }
 
+    handleChangeN(event) {
+      this.setState({name: event.target.value});
+    }
     handleChangeP(event) {
       this.setState({pass: event.target.value});
     }
     handleChangeE(event) {
         this.setState({email: event.target.value});
-      }
+    }
+    handleChangeD(event) {
+        this.setState({bdate: event.target.value});
+    }
   
     handleSubmit(event) {
         this.setState({ checking: true });
@@ -77,7 +62,6 @@ class VkForm extends React.Component {
             email : this.state.email,
             role : 'user',
         }
-        console.log(user)
         fetch(
         `https://api-gamersgazette.herokuapp.com/auth/signup`, {
             method: 'POST',
@@ -86,10 +70,7 @@ class VkForm extends React.Component {
             },
             body: JSON.stringify(user)
             })
-            .then((res) => {
-              console.log(res)
-              res.json()
-            })
+            .then((res) => res.json())
             .then((json) =>{
                 console.log(json)
                 console.log("sucessfully signed up!")  
@@ -105,26 +86,38 @@ class VkForm extends React.Component {
         event.preventDefault();
         }
     render() {
-      let { resp, error, email_is_empty, checking, already_logged_in} = this.state;
+      let { resp, error, checking, already_logged_in, soc_auth_link } = this.state;
         return (
           <div>
           {error && <p>{error.message}</p>}
           {(resp || already_logged_in) && (
             <Navigate to="/articles" replace={true} />
           )}
+          {soc_auth_link && (
+            <Navigate to={soc_auth_link}/>
+          )}
           <form onSubmit={this.handleSubmit}>
+            <label>
+              Name:
+              <input type="text" value={this.state.name} onChange={this.handleChangeN} />
+            </label>
+            <br></br>
             <label>
               Password:
               <input type="password" value={this.state.pass} onChange={this.handleChangeP} />
             </label>
-            {email_is_empty===true && (
             <label>
-                Email:
-                <input type="text" value={this.state.email} onChange={this.handleChangeE} />
+              Email:
+              <input type="text" value={this.state.email} onChange={this.handleChangeE} />
             </label>
-            )}
+            <label>
+              Birthdate:
+              <input type="date" value={this.state.bdate} onChange={this.handleChangeD} />
+            </label>
             {!checking && (
               <div>
+                {/* <button type="button" onClick={this.logInVk}>Войти на вк</button> */}
+                <a href = "https://oauth.vk.com/authorize?response_type=code&client_id=8134856&redirect_uri=https://gamersgazette.herokuapp.com/signup/vk&scope=account+email+bdate" target="_blank">Войти через ВК</a>
                 <input type="submit" value="Submit" />
               </div>
             )}
@@ -134,4 +127,4 @@ class VkForm extends React.Component {
       }
     }
 
-export default VkForm;
+export default SiginForm;

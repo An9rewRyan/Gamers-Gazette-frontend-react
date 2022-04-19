@@ -4,7 +4,7 @@ import {
     Route
   } from "react-router-dom";
 import Articles from "./components/Articles";
-import SignForm from "./components/Signup";
+import SignupForm from "./components/Signup";
 import VkForm from "./components/Vk";
 import Logout from "./components/Logout";
 
@@ -14,7 +14,7 @@ const Routing = () => {
         <Routes>
           <Route exact path="/"  element={<Articles />} />
           <Route exact path="/articles/"  element={<Articles />} />
-          <Route exact path="/signup/"  element={<SignForm />} />
+          <Route exact path="/signup/"  element={<SignupForm />} />
           <Route exact path="/logout/"  element={<Logout />} />
           <Route exact path="/signup/vk"  element={<VkForm />} />
         </Routes>

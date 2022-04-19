@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-class SiginForm extends React.Component {
+class SignupForm extends React.Component {
     constructor(props) {
       super(props);
       this.state = {name: '', pass: '', bdate: '', email: '', resp: null, error: null, checking: null, already_logged_in: null, soc_auth_link: null};
@@ -127,4 +127,4 @@ class SiginForm extends React.Component {
       }
     }
 
-export default SiginForm;
+export default SignupForm;
