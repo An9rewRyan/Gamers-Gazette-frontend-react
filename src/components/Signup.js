@@ -54,7 +54,6 @@ class SiginForm extends React.Component {
     }
   
     handleSubmit(event) {
-        const { cookies } = this.props;
         this.setState({ checking: true });
         let user = {
             username : this.state.name,
