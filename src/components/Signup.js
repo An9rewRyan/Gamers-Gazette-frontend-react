@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate
  } from 'react-router-dom';
-import cookie from "react-cookie";
+ import { Cookies } from "react-cookie";
 
 class SiginForm extends React.Component {
     constructor(props) {
@@ -17,7 +17,7 @@ class SiginForm extends React.Component {
       this.handleSubmit = this.handleSubmit.bind(this);
     }
     componentDidMount() {
-      let session_cookie = cookies.get('session_token')
+      let session_cookie = Cookies.get('session_token')
       console.log(session_cookie)
       if (session_cookie){
         fetch(
@@ -74,7 +74,7 @@ class SiginForm extends React.Component {
                 console.log("sucessfully signed up!")  
                 let d = new Date();
                 d.setTime(d.getTime() + (minutes*30));
-                cookie.set(json.Name, json.Value, {expires: d});
+                Cookies.set(json.Name, json.Value, {expires: d});
                 this.setState({ resp: json });
             })
             .catch((err)=>{

@@ -1,9 +1,7 @@
 import React from 'react';
 import { Navigate
  } from 'react-router-dom';
- import Cookies from 'universal-cookie';
-
-const cookies = new Cookies();
+import { Cookies } from "react-cookie";
 
 class VkForm extends React.Component {
     constructor(props) {
@@ -17,7 +15,7 @@ class VkForm extends React.Component {
     }
     componentDidMount() {
       let link = `https://api-gamersgazette.herokuapp.com/socialauth/vk/me`
-      let session_cookie = cookies.get('session_token')
+      let session_cookie = Cookies.get('session_token')
       console.log(session_cookie)
       if (session_cookie){
         fetch(
@@ -89,7 +87,9 @@ class VkForm extends React.Component {
             .then((json) =>{
                 console.log(json)
                 console.log("sucessfully signed up!")  
-                cookies.set(json.Name, json.Value, json.Expires);
+                let d = new Date();
+                d.setTime(d.getTime() + (minutes*30));
+                Cookies.set(json.Name, json.Value, {expires: d});
                 this.setState({ resp: json });
             })
             .catch((err)=>{

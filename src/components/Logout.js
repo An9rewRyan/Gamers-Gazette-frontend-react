@@ -1,5 +1,5 @@
 import React from 'react';
-import cookie from "react-cookie";
+import { Cookies } from "react-cookie";
 
 class Logout extends React.Component {
 
@@ -10,7 +10,7 @@ class Logout extends React.Component {
     }
 
     componentDidMount() {
-      let session_cookie = cookies.get('session_token')
+      let session_cookie = Cookies.get('session_token')
       console.log(session_cookie)
       if (session_cookie){
         fetch(
@@ -33,7 +33,7 @@ class Logout extends React.Component {
 
     handleLogout() {
       let session_cookie = cookies.get('session_token')
-      cookie.set("session_cookie", "", {expires: "Thu, 01 Jan 1970 00:00:00 UTC"})
+      Cookies.set("session_cookie", "", {expires: "Thu, 01 Jan 1970 00:00:00 UTC"})
       fetch(
         `https://api-gamersgazette.herokuapp.com/auth/logout`, {
           method: 'POST',
