@@ -68,42 +68,40 @@ class VkForm extends React.Component {
         this.setState({email: event.target.value});
       }
   
-    handleSubmit(event) {
-        this.setState({ checking: true });
-        let user = {
-            username : this.state.name,
-            password : this.state.pass,
-            bdate : this.state.bdate,
-            email : this.state.email,
-            role : 'user',
-        }
-        console.log(user)
-        fetch(
-        `https://api-gamersgazette.herokuapp.com/auth/signup`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'text/plain'
-            },
-            body: JSON.stringify(user)
+  handleSubmit(event) {
+    this.setState({ checking: true });
+    let user = {
+        username : this.state.name,
+        password : this.state.pass,
+        bdate : this.state.bdate,
+        email : this.state.email,
+        role : 'user',
+    }
+    
+    fetch(
+    `https://api-gamersgazette.herokuapp.com/auth/signup`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'text/plain'
+        },
+        body: JSON.stringify(user)
+        })
+        .then((res) => res.json())
+        .then((json) =>{
+            console.log(json)
+            console.log("sucessfully signed up!")  
+            let d = new Date();
+            d.setTime(d.getTime() + (30*60000));
+            cookies.set(json.Name, json.Value, {expires: d});
+            this.setState({ resp: json });
+        })
+        .catch((err)=>{
+            console.log("Got error while signing up: "+err)
+            this.setState({ err });
             })
-            .then((res) => {
-              console.log(res)
-              res.json()
-            })
-            .then((json) =>{
-                console.log(json)
-                console.log("sucessfully signed up!")  
-                let d = new Date();
-                d.setTime(d.getTime() + (30*60000));
-                cookies.set(json.Name, json.Value, {expires: d});
-                this.setState({ resp: json });
-            })
-            .catch((err)=>{
-                console.log("Got error while signing up: "+err)
-                this.setState({ err });
-                })
-        event.preventDefault();
-        }
+    event.preventDefault();
+    }
+
     render() {
       let { resp, error, email_is_empty, checking, already_logged_in} = this.state;
         return (
