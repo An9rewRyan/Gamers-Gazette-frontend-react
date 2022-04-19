@@ -5,7 +5,7 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-class SiginForm extends React.Component {
+class SignInForm extends React.Component {
     constructor(props) {
       super(props);
       this.state = {name: '', pass: '', bdate: '', email: '', resp: null, error: null, checking: null, already_logged_in: null, soc_auth_link: null};
@@ -13,8 +13,6 @@ class SiginForm extends React.Component {
 
       this.handleChangeN = this.handleChangeN.bind(this);
       this.handleChangeP = this.handleChangeP.bind(this);
-      this.handleChangeE = this.handleChangeE.bind(this);
-      this.handleChangeD = this.handleChangeD.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -32,7 +30,7 @@ class SiginForm extends React.Component {
             })
               .then((res) =>{
                 console.log(res.status)
-                if (res.status != '400' && res.status != 401){
+                if (res.status != 400 && res.status != 401){
                   this.setState({already_logged_in: true})
                 }
               })
@@ -46,24 +44,18 @@ class SiginForm extends React.Component {
     handleChangeP(event) {
       this.setState({pass: event.target.value});
     }
-    handleChangeE(event) {
-        this.setState({email: event.target.value});
-    }
-    handleChangeD(event) {
-        this.setState({bdate: event.target.value});
-    }
   
     handleSubmit(event) {
         this.setState({ checking: true });
         let user = {
             username : this.state.name,
             password : this.state.pass,
-            bdate : this.state.bdate,
-            email : this.state.email,
-            role : 'user',
+            bdate : "2004-01-01", //this is placeholder, cause server needs this field to nominally exist
+            email : "example@mail.com", //this is placeholder, cause server needs this field to nominally exist
+            role : "wonderwoman", //this is placeholder, cause server needs this field to nominally exist
         }
         fetch(
-        `https://api-gamersgazette.herokuapp.com/auth/signup`, {
+        `https://api-gamersgazette.herokuapp.com/auth/signin`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
@@ -85,6 +77,7 @@ class SiginForm extends React.Component {
                 })
         event.preventDefault();
         }
+
     render() {
       let { resp, error, checking, already_logged_in, soc_auth_link } = this.state;
         return (
@@ -106,17 +99,8 @@ class SiginForm extends React.Component {
               Password:
               <input type="password" value={this.state.pass} onChange={this.handleChangeP} />
             </label>
-            <label>
-              Email:
-              <input type="text" value={this.state.email} onChange={this.handleChangeE} />
-            </label>
-            <label>
-              Birthdate:
-              <input type="date" value={this.state.bdate} onChange={this.handleChangeD} />
-            </label>
             {!checking && (
               <div>
-                {/* <button type="button" onClick={this.logInVk}>Войти на вк</button> */}
                 <a href = "https://oauth.vk.com/authorize?response_type=code&client_id=8134856&redirect_uri=https://gamersgazette.herokuapp.com/signup/vk&scope=account+email+bdate" target="_blank">Войти через ВК</a>
                 <input type="submit" value="Submit" />
               </div>
@@ -127,4 +111,4 @@ class SiginForm extends React.Component {
       }
     }
 
-export default SiginForm;
+export default SignInForm;
