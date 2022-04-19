@@ -88,7 +88,7 @@ class VkForm extends React.Component {
                 console.log(json)
                 console.log("sucessfully signed up!")  
                 let d = new Date();
-                d.setTime(d.getTime() + (minutes*30));
+                d.setTime(d.getTime() + (30*60000));
                 Cookies.set(json.Name, json.Value, {expires: d});
                 this.setState({ resp: json });
             })
