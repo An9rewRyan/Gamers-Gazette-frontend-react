@@ -15,8 +15,8 @@ const Routing = () => {
           <Route exact path="/"  element={<Articles />} />
           <Route exact path="/articles/"  element={<Articles />} />
           <Route exact path="/signup/"  element={<SignForm />} />
-          {/* <Route exact path="/logout/"  element={<Logout />} />
-          <Route exact path="/signup/vk"  element={<VkForm />} /> */}
+          <Route exact path="/logout/"  element={<Logout />} />
+          <Route exact path="/signup/vk"  element={<VkForm />} />
         </Routes>
       </Router>
     )
