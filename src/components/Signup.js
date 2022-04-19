@@ -1,8 +1,9 @@
 import React from 'react';
 import { Navigate
  } from 'react-router-dom';
- import { withCookies, Cookies } from "react-cookie";
- import { instanceOf } from "prop-types";
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 class SiginForm extends React.Component {
     constructor(props) {
@@ -14,16 +15,10 @@ class SiginForm extends React.Component {
       this.handleChangeP = this.handleChangeP.bind(this);
       this.handleChangeE = this.handleChangeE.bind(this);
       this.handleChangeD = this.handleChangeD.bind(this);
-      // this.logInVk = this.logInVk.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    static propTypes = {
-      cookies: instanceOf(Cookies).isRequired
-    };
-
     componentDidMount() {
-      const { cookies } = this.props;
       let session_cookie = cookies.get('session_token')
       console.log(session_cookie)
       if (session_cookie){
