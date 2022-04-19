@@ -1,5 +1,6 @@
 import React from 'react';
 import { withCookies, Cookies } from "react-cookie";
+import { instanceOf } from "prop-types";
 
 class Logout extends React.Component {
 

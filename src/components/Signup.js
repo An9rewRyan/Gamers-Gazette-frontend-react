@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigate
  } from 'react-router-dom';
  import { withCookies, Cookies } from "react-cookie";
+ import { instanceOf } from "prop-types";
 
 class SiginForm extends React.Component {
     constructor(props) {
