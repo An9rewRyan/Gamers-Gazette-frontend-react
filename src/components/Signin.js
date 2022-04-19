@@ -71,11 +71,11 @@ class SignInForm extends React.Component {
                 this.setState({error: "Error on serverside!", checking: false})
                 return
               }
-              res.json()
+              return res.json()
             })
             .then((json) =>{
                 console.log(json)
-                console.log("sucessfully signed up!")  
+                console.log("sucessfully signed in!")  
                 let d = new Date();
                 d.setTime(d.getTime() + (30*60000));
                 cookies.set(json.Name, json.Value, {expires: d});
