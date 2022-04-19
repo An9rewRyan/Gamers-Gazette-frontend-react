@@ -32,7 +32,7 @@ class SignupForm extends React.Component {
             })
               .then((res) =>{
                 console.log(res.status)
-                if (res.status != '400' && res.status != 401){
+                if (res.status != 400 && res.status != 401){
                   this.setState({already_logged_in: true})
                 }
               })
