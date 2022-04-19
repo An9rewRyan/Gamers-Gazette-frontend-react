@@ -64,10 +64,12 @@ class SignInForm extends React.Component {
             })
             .then((res) => {
               if (res.status == 401){
-                this.setState("Your password or login didn`t match!")
+                this.setState({error: "Your password or login didn`t match!", checking: false})
+                return
               }
               if (res.status == 400){
-                this.setState("Error on serverside!")
+                this.setState({error: "Error on serverside!", checking: false})
+                return
               }
               res.json()
             })
