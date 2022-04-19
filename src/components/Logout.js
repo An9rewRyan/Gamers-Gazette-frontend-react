@@ -34,7 +34,9 @@ class Logout extends React.Component {
 
     handleLogout() {
       let session_cookie = cookies.get('session_token')
-      cookies.set("session_cookie", "", {expires: "Thu, 01 Jan 1970 00:00:00 UTC"})
+      let d = new Date();
+      d.setTime(d.getTime() + (30*60000));
+      cookies.set("session_cookie", "", {expires: d})
       fetch(
         `https://api-gamersgazette.herokuapp.com/auth/logout`, {
           method: 'POST',
