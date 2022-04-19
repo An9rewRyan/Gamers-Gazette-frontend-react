@@ -6,8 +6,9 @@ class Logout extends React.Component {
 
     constructor(props) {
       super(props);
-      this.handleLogout = this.handleLogout(this)
+
       this.state = {already_logged_in: null};
+      this.handleLogout = this.handleLogout(this)
     }
 
     componentDidMount() {
@@ -32,7 +33,7 @@ class Logout extends React.Component {
         }
     }
 
-    handleLogout() {
+    handleLogout(event) {
       let session_cookie = cookies.get('session_token')
       console.log(session_cookie)
       fetch(

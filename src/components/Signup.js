@@ -36,10 +36,10 @@ class SignupForm extends React.Component {
                   this.setState({already_logged_in: true})
                   return
                 }
-                this.setState({session_checked: true})
               })
               .catch((err)=>console.log(err))
         }
+      this.setState({session_checked: true})
     }
 
     handleChangeN(event) {

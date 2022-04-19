@@ -38,6 +38,7 @@ class SignInForm extends React.Component {
               })
               .catch((err)=>console.log(err))
         }
+        this.setState({session_checked: true})
     }
 
     handleChangeN(event) {
