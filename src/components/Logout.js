@@ -1,5 +1,5 @@
 import React from 'react';
-import { Cookies } from "react-cookie";
+import { withCookies, Cookies } from "react-cookie";
 
 class Logout extends React.Component {
 
@@ -9,8 +9,13 @@ class Logout extends React.Component {
       this.state = {already_logged_in: null};
     }
 
+    static propTypes = {
+      cookies: instanceOf(Cookies).isRequired
+    };
+
     componentDidMount() {
-      let session_cookie = Cookies.get('session_token')
+      const { cookies } = this.props;
+      let session_cookie = cookies.get('session_token')
       console.log(session_cookie)
       if (session_cookie){
         fetch(
@@ -32,8 +37,9 @@ class Logout extends React.Component {
     }
 
     handleLogout() {
-      let session_cookie = Cookies.get('session_token')
-      Cookies.set("session_cookie", "", {expires: "Thu, 01 Jan 1970 00:00:00 UTC"})
+      const { cookies } = this.props;
+      let session_cookie = cookies.get('session_token')
+      cookies.set("session_cookie", "", {expires: "Thu, 01 Jan 1970 00:00:00 UTC"})
       fetch(
         `https://api-gamersgazette.herokuapp.com/auth/logout`, {
           method: 'POST',
