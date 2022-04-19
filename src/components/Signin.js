@@ -62,7 +62,15 @@ class SignInForm extends React.Component {
             },
             body: JSON.stringify(user)
             })
-            .then((res) => res.json())
+            .then((res) => {
+              if (res.status == 401){
+                this.setState("Your password or login didn`t match!")
+              }
+              if (res.status == 400){
+                this.setState("Error on serverside!")
+              }
+              res.json()
+            })
             .then((json) =>{
                 console.log(json)
                 console.log("sucessfully signed up!")  
@@ -82,7 +90,7 @@ class SignInForm extends React.Component {
       let { resp, error, checking, already_logged_in, soc_auth_link } = this.state;
         return (
           <div>
-          {error && <p>{error.message}</p>}
+          {error && <p>{error}</p>}
           {(resp || already_logged_in) && (
             <Navigate to="/articles" replace={true} />
           )}
