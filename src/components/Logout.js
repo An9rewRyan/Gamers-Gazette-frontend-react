@@ -57,10 +57,8 @@ class Logout extends React.Component {
       let {already_logged_in} = this.state;
         return (
           <div>
-          {already_logged_in 
-            ? <button onClick={this.handleLogout}>Log out</button>
-            : <div>Logged out!</div>
-          }
+          {already_logged_in && <button onClick={this.handleLogout}>Log out</button>}
+          {!already_logged_in &&<div>Logged out!</div>}
           </div>
         );
       }
