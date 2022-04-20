@@ -84,6 +84,7 @@ class SignupForm extends React.Component {
               if (res.status == 200){
                 this.setState({error: null, checking: true})
               }
+              console.log(this.state.error)
             })
             .catch((err)=>{
               console.log("Got error while signing up: "+err)
