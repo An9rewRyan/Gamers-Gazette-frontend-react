@@ -74,6 +74,10 @@ class SignInForm extends React.Component {
                 this.setState({error: "Error on serverside!", checking: false})
                 return
               }
+              if (res.status == 409){
+                this.setState({error: "There is an account which already registered whith this data, if its yours, you need to sign in!", checking: false})
+                return
+              }
               return res.json()
             })
             .then((json) =>{

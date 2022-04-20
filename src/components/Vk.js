@@ -16,7 +16,7 @@ class VkForm extends React.Component {
       this.handleChangeE = this.handleChangeE.bind(this);
     }
 
-    componentDidMount() {
+    componentWillMount() {
       let link = `https://api-gamersgazette.herokuapp.com/socialauth/vk/me`
       let session_cookie = cookies.get('session_token')
       console.log(session_cookie)
