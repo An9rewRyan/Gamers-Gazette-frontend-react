@@ -66,33 +66,55 @@ class SignupForm extends React.Component {
         }
         console.log(user)
         fetch(
-        `https://api-gamersgazette.herokuapp.com/auth/signup`, {
+          `https://api-gamersgazette.herokuapp.com/auth/checkifregistered`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'text/plain'
             },
             body: JSON.stringify(user)
             })
-            .then((res) => {
+            .then((res)=>{
               if (res.status == 409){
                 this.setState({error: "There is an account which already registered whith this data, if its yours, you need to sign in!", checking: false})
-                return
               }
-              return res.json()
-            })
-            .then((json) =>{
-                console.log(json)
-                console.log("sucessfully signed up!")  
-                let d = new Date();
-                d.setTime(d.getTime() + (30*60000));
-                cookies.set(json.Name, json.Value, {expires: d, path: "/"});
-                this.setState({ resp: json });
+              if (res.status == 500){
+                this.setState({error: "Iternal erver on server side, please try again later!", checking: false})
+              }
+              if (res.status == 200){
+                this.setState({error: null, checking: true})
+              }
             })
             .catch((err)=>{
-                console.log("Got error while signing up: "+err)
-                this.setState({ err });
-                })
-        event.preventDefault();
+              console.log("Got error while signing up: "+err)
+              this.setState({ error: err });
+            })
+
+         if (this.state.error === null){
+          fetch(
+          `https://api-gamersgazette.herokuapp.com/auth/signup`, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'text/plain'
+              },
+              body: JSON.stringify(user)
+              })
+              .then((res) => {
+                return res.json()
+              })
+              .then((json) =>{
+                  console.log(json)
+                  console.log("sucessfully signed up!")  
+                  let d = new Date();
+                  d.setTime(d.getTime() + (30*60000));
+                  cookies.set(json.Name, json.Value, {expires: d, path: "/"});
+                  this.setState({ resp: json });
+              })
+              .catch((err)=>{
+                  console.log("Got error while signing up: "+err)
+                  this.setState({ err });
+                  })
+          }
+          event.preventDefault();
         }
     render() {
       let { resp, error, checking, already_logged_in, soc_auth_link, session_checked } = this.state;
