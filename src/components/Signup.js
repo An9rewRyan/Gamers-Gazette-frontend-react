@@ -136,20 +136,20 @@ class SignupForm extends React.Component {
           {session_checked && (
           <form onSubmit={this.handleSubmit}>
             <label>
-              Name:
+              <div style={{ color: mark_empty_name ? "red" : "black" }}>Name:</div>
               <input style={{ border: mark_empty_name ? "4px solid red" : "1px solid black" }}  type="text" value={this.state.name} onChange={this.handleChangeN} />
             </label>
             <br></br>
             <label>
-              Password:
+              <div style={{ color: mark_empty_pass ? "red" : "black" }}>Password:</div>
               <input style={{ border: mark_empty_pass ? "4px solid red" : "1px solid black" }} type="password" value={this.state.pass} onChange={this.handleChangeP} />
             </label>
             <label>
-              Email:
+            <div style={{ color: mark_empty_email ? "red" : "black" }}>Email:</div>
               <input style={{ border: mark_empty_email ? "4px solid red" : "1px solid black" }} type="text" value={this.state.email} onChange={this.handleChangeE} />
             </label>
             <label>
-              Birthdate:
+              <div style={{ color: mark_empty_bdate ? "red" : "black" }}>Birthdate:</div>
               <input style={{ border: mark_empty_bdate ? "4px solid red" : "1px solid black" }} type="date" value={this.state.bdate} onChange={this.handleChangeD} />
             </label>
             {!checking && (
