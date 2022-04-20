@@ -90,7 +90,7 @@ class SignupForm extends React.Component {
               console.log("Got error while signing up: "+err)
               this.setState({ error: err });
             })
-
+         console.log(this.state.error)
          if (this.state.error === null){
           fetch(
           `https://api-gamersgazette.herokuapp.com/auth/signup`, {
