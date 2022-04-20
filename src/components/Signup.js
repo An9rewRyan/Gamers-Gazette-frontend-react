@@ -106,13 +106,13 @@ class SignupForm extends React.Component {
               body: JSON.stringify(user)
               })
               .then((res) => {
+                if (res.status == 409){
+                  this.setState({error: "The account with this data already exists, you need to sign in!", checking: false})
+                  return
+                }
                 return res.json()
               })
               .then((json) =>{
-                  if (res.status == 409){
-                    this.setState({error: "The account with this data already exists, you need to sign in!", checking: false})
-                    return
-                  }
                   console.log(json)
                   console.log("sucessfully signed up!")  
                   let d = new Date();
