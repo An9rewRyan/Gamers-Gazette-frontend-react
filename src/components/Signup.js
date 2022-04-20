@@ -123,7 +123,8 @@ class SignupForm extends React.Component {
 
     render() {
       let { mark_empty_name, mark_empty_pass, mark_empty_email, mark_empty_bdate, resp, error, checking, already_logged_in, soc_auth_link, session_checked } = this.state
-        return (
+      // let style = {{border: mark_empty_name ? "4px red" : "border: 1px black" }}
+      return (
           <div>
           {error && <strong>{error}</strong>}
           {(resp || already_logged_in) && (
@@ -136,20 +137,20 @@ class SignupForm extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label>
               Name:
-              <input style={mark_empty_name ? "border: 4px red" : "border: 1px black"}  type="text" value={this.state.name} onChange={this.handleChangeN} />
+              <input style={{ border: mark_empty_name ? "4px red" : "1px black" }}  type="text" value={this.state.name} onChange={this.handleChangeN} />
             </label>
             <br></br>
             <label>
               Password:
-              <input style={mark_empty_pass ? "border: 4px red" : "border: 1px black"} type="password" value={this.state.pass} onChange={this.handleChangeP} />
+              <input style={{ border: mark_empty_pass ? "4px red" : "1px black" }} type="password" value={this.state.pass} onChange={this.handleChangeP} />
             </label>
             <label>
               Email:
-              <input style={mark_empty_email ? "border: 4px red" : "border: 1px black"} type="text" value={this.state.email} onChange={this.handleChangeE} />
+              <input style={{ border: mark_empty_email ? "4px red" : "1px black" }} type="text" value={this.state.email} onChange={this.handleChangeE} />
             </label>
             <label>
               Birthdate:
-              <input style={mark_empty_bdate ? "border: 4px red" : "border: 1px black"} type="date" value={this.state.bdate} onChange={this.handleChangeD} />
+              <input style={{ border: mark_empty_bdate ? "4px red" : "1px black" }} type="date" value={this.state.bdate} onChange={this.handleChangeD} />
             </label>
             {!checking && (
               <div>
