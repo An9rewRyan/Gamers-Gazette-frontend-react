@@ -65,6 +65,7 @@ class SignupForm extends React.Component {
             role : 'user',
         }
         console.log(user)
+        let not_registered = true
         fetch(
           `https://api-gamersgazette.herokuapp.com/auth/checkifregistered`, {
             method: 'POST',
@@ -77,9 +78,11 @@ class SignupForm extends React.Component {
               console.log(res.status)
               if (res.status == 409){
                 this.setState({error: "There is an account which already registered whith this data, if its yours, you need to sign in!", checking: false})
+                not_registered = false
               }
               if (res.status == 500){
                 this.setState({error: "Iternal erver on server side, please try again later!", checking: false})
+                not_registered = false
               }
               if (res.status == 200){
                 this.setState({error: null, checking: true})
@@ -93,7 +96,7 @@ class SignupForm extends React.Component {
               return
             })
          console.log(this.state.error)
-         if (this.state.error === null){
+         if (not_registered){
           fetch(
           `https://api-gamersgazette.herokuapp.com/auth/signup`, {
               method: 'POST',
