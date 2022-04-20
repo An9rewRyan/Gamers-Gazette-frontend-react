@@ -52,6 +52,7 @@ class Logout extends React.Component {
             this.setState({already_logged_in: null})
           })
           .catch((err)=>console.log(err))
+      event.preventDefault();
     }
   
     render() {
@@ -59,7 +60,7 @@ class Logout extends React.Component {
       console.log(already_logged_in)
         return (
           <div>
-          {already_logged_in && <button onClick={this.handleLogout}>Log out</button>}
+            <button onClick={this.handleLogout}>Log out</button>
           </div>
         );
       }
