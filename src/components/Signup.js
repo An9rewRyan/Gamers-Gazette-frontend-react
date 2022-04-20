@@ -67,7 +67,7 @@ class SignupForm extends React.Component {
             email : this.state.email,
             role : 'user',
         }
-        for (let [key, value] of Object.entries(object1)) {
+        for (let [key, value] of Object.entries(user)) {
           if (value === ""){
             found_empty = true
             switch (key){
