@@ -55,6 +55,7 @@ class Logout extends React.Component {
     }
   
     render() {
+      let {already_logged_in} = this.state;
         return (
           <div>
           {already_logged_in && (
