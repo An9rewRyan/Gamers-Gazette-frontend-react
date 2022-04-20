@@ -11,7 +11,6 @@ class SignupForm extends React.Component {
       this.state = {name: '', session_checked: null, pass: '', bdate: '', email: '',
                     resp: null, error: null, checking: null, already_logged_in: null, soc_auth_link: null,
                     mark_empty_name: null, mark_empty_pass: null, mark_empty_bdate: null, mark_empty_email: true};
-      this.SignedUp = false
 
       this.handleChangeN = this.handleChangeN.bind(this);
       this.handleChangeP = this.handleChangeP.bind(this);
@@ -68,7 +67,7 @@ class SignupForm extends React.Component {
             role : 'user',
         }
         for (let [key, value] of Object.entries(user)) {
-          if (value === ""){
+          if (value === "" || value === null || value === undefined){
             found_empty = true
             switch (key){
               case "username":
@@ -88,8 +87,8 @@ class SignupForm extends React.Component {
         }
         if (found_empty){
           this.setState({ checking: false });
-          return
         }
+        else{
         console.log(user)
           fetch(
           `https://api-gamersgazette.herokuapp.com/auth/signup`, {
@@ -118,6 +117,7 @@ class SignupForm extends React.Component {
                   console.log("Got error while signing up: "+err)
                   this.setState({ err });
                   })
+                }
           event.preventDefault();
         }
 
