@@ -8,7 +8,9 @@ const cookies = new Cookies();
 class SignupForm extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {name: '', session_checked: null, pass: '', bdate: '', email: '', resp: null, error: null, checking: null, already_logged_in: null, soc_auth_link: null};
+      this.state = {name: '', session_checked: null, pass: '', bdate: '', email: '',
+                    resp: null, error: null, checking: null, already_logged_in: null, soc_auth_link: null,
+                    mark_empty_name: null, mark_empty_pass: null, mark_empty_bdate: null, mark_empty_email: true};
       this.SignedUp = false
 
       this.handleChangeN = this.handleChangeN.bind(this);
@@ -57,6 +59,7 @@ class SignupForm extends React.Component {
   
     handleSubmit(event) {
         this.setState({ checking: true });
+        let found_empty = false
         let user = {
             username : this.state.name,
             password : this.state.pass,
@@ -64,39 +67,30 @@ class SignupForm extends React.Component {
             email : this.state.email,
             role : 'user',
         }
+        for (let [key, value] of Object.entries(object1)) {
+          if (value === ""){
+            found_empty = true
+            switch (key){
+              case "username":
+                this.setState({mark_empty_name:true})
+                break
+              case "password":
+                this.setState({mark_empty_pass:true})
+                break
+              case "bdate":
+                this.setState({mark_empty_bdate:true})
+                break
+              case "email":
+                this.setState({mark_empty_email:true})
+                break
+            }
+          }
+        }
+        if (found_empty){
+          this.setState({ checking: false });
+          return
+        }
         console.log(user)
-        // let not_registered = true
-        // fetch(
-        //   `https://api-gamersgazette.herokuapp.com/auth/checkifregistered`, {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'text/plain'
-        //     },
-        //     body: JSON.stringify(user)
-        //     })
-        //     .then((res)=>{
-        //       console.log(res.status)
-        //       if (res.status == 409){
-        //         this.setState({error: "There is an account which already registered whith this data, if its yours, you need to sign in!", checking: false})
-        //         not_registered = false
-        //       }
-        //       if (res.status == 500){
-        //         this.setState({error: "Iternal erver on server side, please try again later!", checking: false})
-        //         not_registered = false
-        //       }
-        //       if (res.status == 200){
-        //         this.setState({error: null, checking: true})
-        //       }
-        //       console.log(this.state.error)
-        //       return
-        //     })
-        //     .catch((err)=>{
-        //       console.log("Got error while signing up: "+err)
-        //       this.setState({ error: err });
-        //       return
-        //     })
-        //  console.log(not_registered)
-        //  if (not_registered){
           fetch(
           `https://api-gamersgazette.herokuapp.com/auth/signup`, {
               method: 'POST',
@@ -124,11 +118,11 @@ class SignupForm extends React.Component {
                   console.log("Got error while signing up: "+err)
                   this.setState({ err });
                   })
-          // }
           event.preventDefault();
         }
+
     render() {
-      let { resp, error, checking, already_logged_in, soc_auth_link, session_checked } = this.state;
+      let { mark_empty_name, mark_empty_pass, mark_empty_email, mark_empty_bdate, resp, error, checking, already_logged_in, soc_auth_link, session_checked } = this.state
         return (
           <div>
           {error && <strong>{error}</strong>}
@@ -142,24 +136,23 @@ class SignupForm extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label>
               Name:
-              <input type="text" value={this.state.name} onChange={this.handleChangeN} />
+              <input style={mark_empty_name ? "border: 4px red" : "border: 1px black"}  type="text" value={this.state.name} onChange={this.handleChangeN} />
             </label>
             <br></br>
             <label>
               Password:
-              <input type="password" value={this.state.pass} onChange={this.handleChangeP} />
+              <input style={mark_empty_pass ? "border: 4px red" : "border: 1px black"} type="password" value={this.state.pass} onChange={this.handleChangeP} />
             </label>
             <label>
               Email:
-              <input type="text" value={this.state.email} onChange={this.handleChangeE} />
+              <input style={mark_empty_email ? "border: 4px red" : "border: 1px black"} type="text" value={this.state.email} onChange={this.handleChangeE} />
             </label>
             <label>
               Birthdate:
-              <input type="date" value={this.state.bdate} onChange={this.handleChangeD} />
+              <input style={mark_empty_bdate ? "border: 4px red" : "border: 1px black"} type="date" value={this.state.bdate} onChange={this.handleChangeD} />
             </label>
             {!checking && (
               <div>
-                {/* <button type="button" onClick={this.logInVk}>Войти на вк</button> */}
                 <a href = "https://oauth.vk.com/authorize?response_type=code&client_id=8134856&redirect_uri=https://gamersgazette.herokuapp.com/signup/vk&scope=account+email+bdate" target="_blank">Войти через ВК</a>
                 <input type="submit" value="Submit" />
               </div>
