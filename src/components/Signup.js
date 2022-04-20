@@ -74,6 +74,7 @@ class SignupForm extends React.Component {
             body: JSON.stringify(user)
             })
             .then((res)=>{
+              console.log(res.status)
               if (res.status == 409){
                 this.setState({error: "There is an account which already registered whith this data, if its yours, you need to sign in!", checking: false})
               }
