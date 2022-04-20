@@ -8,7 +8,7 @@ class Logout extends React.Component {
       super(props);
 
       this.state = {already_logged_in: null};
-      this.handleLogout = this.handleLogout(this)
+      this.handleClick = this.handleClick.bind(this)
     }
 
     componentDidMount() {
@@ -33,7 +33,7 @@ class Logout extends React.Component {
         }
     }
 
-    handleLogout(event) {
+    handleClick() {
       let session_cookie = cookies.get('session_token')
       console.log(session_cookie)
       fetch(
@@ -52,15 +52,17 @@ class Logout extends React.Component {
             this.setState({already_logged_in: null})
           })
           .catch((err)=>console.log(err))
-      event.preventDefault();
     }
   
     render() {
-      let {already_logged_in} = this.state;
-      console.log(already_logged_in)
         return (
           <div>
-            <button onClick={this.handleLogout}>Log out</button>
+          {already_logged_in && (
+            <button onClick={this.handleClick}> Click to logout! </button>
+          )}
+          {!already_logged_in && (
+            <strong>Need to login before logout!</strong>
+          )}
           </div>
         );
       }
