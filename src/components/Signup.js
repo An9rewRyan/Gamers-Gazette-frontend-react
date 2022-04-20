@@ -10,7 +10,7 @@ class SignupForm extends React.Component {
       super(props);
       this.state = {name: '', session_checked: null, pass: '', bdate: '', email: '',
                     resp: null, error: null, checking: null, already_logged_in: null, soc_auth_link: null,
-                    mark_empty_name: null, mark_empty_pass: null, mark_empty_bdate: null, mark_empty_email: true};
+                    mark_empty_name: null, mark_empty_pass: null, mark_empty_bdate: null, mark_empty_email: null};
 
       this.handleChangeN = this.handleChangeN.bind(this);
       this.handleChangeP = this.handleChangeP.bind(this);
