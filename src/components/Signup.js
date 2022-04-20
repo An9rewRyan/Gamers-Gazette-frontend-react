@@ -73,7 +73,13 @@ class SignupForm extends React.Component {
             },
             body: JSON.stringify(user)
             })
-            .then((res) => res.json())
+            .then((res) => {
+              if (res.status == 409){
+                this.setState({error: "There is an account which already registered whith this data, if its yours, you need to sign in!", checking: false})
+                return
+              }
+              return res.json()
+            })
             .then((json) =>{
                 console.log(json)
                 console.log("sucessfully signed up!")  
@@ -92,7 +98,7 @@ class SignupForm extends React.Component {
       let { resp, error, checking, already_logged_in, soc_auth_link, session_checked } = this.state;
         return (
           <div>
-          {error && <p>{error.message}</p>}
+          {error && <strong>{error}</strong>}
           {(resp || already_logged_in) && (
             <Navigate to="/articles" replace={true} />
           )}
