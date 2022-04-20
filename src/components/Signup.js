@@ -137,20 +137,20 @@ class SignupForm extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label>
               Name:
-              <input style={{ border: mark_empty_name ? "4px red" : "1px black" }}  type="text" value={this.state.name} onChange={this.handleChangeN} />
+              <input style={{ border: mark_empty_name ? "4px solid red" : "1px solid black" }}  type="text" value={this.state.name} onChange={this.handleChangeN} />
             </label>
             <br></br>
             <label>
               Password:
-              <input style={{ border: mark_empty_pass ? "4px red" : "1px black" }} type="password" value={this.state.pass} onChange={this.handleChangeP} />
+              <input style={{ border: mark_empty_pass ? "4px solid red" : "1px solid black" }} type="password" value={this.state.pass} onChange={this.handleChangeP} />
             </label>
             <label>
               Email:
-              <input style={{ border: mark_empty_email ? "4px red" : "1px black" }} type="text" value={this.state.email} onChange={this.handleChangeE} />
+              <input style={{ border: mark_empty_email ? "4px solid red" : "1px solid black" }} type="text" value={this.state.email} onChange={this.handleChangeE} />
             </label>
             <label>
               Birthdate:
-              <input style={{ border: mark_empty_bdate ? "4px red" : "1px black" }} type="date" value={this.state.bdate} onChange={this.handleChangeD} />
+              <input style={{ border: mark_empty_bdate ? "4px solid red" : "1px solid black" }} type="date" value={this.state.bdate} onChange={this.handleChangeD} />
             </label>
             {!checking && (
               <div>
