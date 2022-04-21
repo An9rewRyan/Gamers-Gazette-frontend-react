@@ -18,8 +18,6 @@ class SignupForm extends React.Component {
       this.handleChangeE = this.handleChangeE.bind(this);
       this.handleChangeD = this.handleChangeD.bind(this);
 
-      this.checkIfPassOk = this.checkIfPassOk.bind(this);
-
       this.handleSubmit = this.handleSubmit.bind(this);
     }
 
