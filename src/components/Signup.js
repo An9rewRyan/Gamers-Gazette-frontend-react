@@ -75,8 +75,28 @@ class SignupForm extends React.Component {
       this.setState({name: event.target.value});
     }
     handleChangeP(event) {
+      let pass = event.target.value
+      let message = ""
+      if (pass.length <12){
+        message+="Password has to be at least 12 characters long!\n"
+      }
+      if (!(/[A-Z]/.test(pass))) {
+        message+="Password has to contain at least one uppercase symbol!\n"
+      }
+      if (!(/[a-z]/.test(pass))) {
+        message+="Password has to contain at least one lowercase symbol!\n"
+      }
+      if (!(/\d/.test(pass))) {
+        message+="Password has to contain at least one number!\n"
+      }
+      if (!(/[!@#\$%\^\&*\)\(+=._-]/.test(pass))) {
+        message+="Password has to contain at least one special character!\n"
+      }
+      if (pass.replace(/\D/g, '').length > parseInt(pass.length/2)){
+        message+="Password should not be mostly numeric!\n"
+      }
       this.setState({pass: event.target.value});
-      this.checkIfPassOk()
+      this.setState({bad_pass_message: message})
     }
     handleChangeE(event) {
         this.setState({email: event.target.value});
