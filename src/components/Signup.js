@@ -171,7 +171,7 @@ class SignupForm extends React.Component {
             <label>
               <div style={{ color: mark_empty_pass ? "red" : "black" }}>Password:</div>
               <input style={{ border: mark_empty_pass ? "4px solid red" : "1px solid black" }} type="password" value={this.state.pass} onChange={this.handleChangeP} />
-              <div style={{color: "red"}}>bad_pass_message</div>
+              <div style={{color: "red"}}>{bad_pass_message}</div>
             </label>
             <label>
             <div style={{ color: mark_empty_email ? "red" : "black" }}>Email:</div>
