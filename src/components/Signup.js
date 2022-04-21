@@ -11,7 +11,7 @@ class SignupForm extends React.Component {
       this.state = {name: '', session_checked: null, pass: '', bdate: '', email: '',
                     resp: null, error: null, checking: null, already_logged_in: null, soc_auth_link: null,
                     mark_empty_name: null, mark_empty_pass: null, mark_empty_bdate: null, mark_empty_email: null,
-                    bad_pass_message: null, name_is_free: null};
+                    bad_pass_message: null, name_is_free: "unchecked"};
 
       this.handleChangeN = this.handleChangeN.bind(this);
       this.handleChangeP = this.handleChangeP.bind(this);
@@ -33,8 +33,11 @@ class SignupForm extends React.Component {
           })
             .then((res) =>{
               console.log(res.status)
-              if (res.status == 404){
-                this.setState({name_is_free: true})
+              if (res.status === 404){
+                this.setState({name_is_free: "free"})
+              } 
+              if (res.status === 200){
+                this.setState({name_is_free: "taken"})
               }
             })
             .catch((err)=>console.log(err))
@@ -127,7 +130,7 @@ class SignupForm extends React.Component {
             }
           }
         }
-        if (found_empty || this.state.bad_pass_message!="" || !this.state.name_is_free){
+        if (found_empty || this.state.bad_pass_message!="" || this.state.name_is_free==="unchecked" || this.state.name_is_free==="taken"){
           this.setState({ checking: false });
         }
         else{
@@ -179,7 +182,7 @@ class SignupForm extends React.Component {
             <label>
               <div style={{ color: mark_empty_name ? "red" : "black" }}>Name:</div>
               <input style={{ border: mark_empty_name ? "4px solid red" : "1px solid black" }}  type="text" value={this.state.name} onChange={this.handleChangeN} onBlur={this.checkIfNameIsTaken}/>
-              {!name_is_free && (
+              {name_is_free==="taken" && (
                 <div style={{color: "red"}}>This username is already in use, please, try another!</div>
               )}
             </label>
