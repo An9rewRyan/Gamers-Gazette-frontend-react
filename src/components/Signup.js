@@ -10,16 +10,44 @@ class SignupForm extends React.Component {
       super(props);
       this.state = {name: '', session_checked: null, pass: '', bdate: '', email: '',
                     resp: null, error: null, checking: null, already_logged_in: null, soc_auth_link: null,
-                    mark_empty_name: null, mark_empty_pass: null, mark_empty_bdate: null, mark_empty_email: null};
+                    mark_empty_name: null, mark_empty_pass: null, mark_empty_bdate: null, mark_empty_email: null,
+                    bad_pass_message: null};
 
       this.handleChangeN = this.handleChangeN.bind(this);
       this.handleChangeP = this.handleChangeP.bind(this);
       this.handleChangeE = this.handleChangeE.bind(this);
       this.handleChangeD = this.handleChangeD.bind(this);
+
+      this.checkIfPassOk = this.checkIfPassOk.bind(this);
+
       this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() {
+    checkIfPassOk(){
+      let pass = this.state.pass
+      let message = ""
+      if (pass.length <12){
+        message+="Password has to be at least 12 characters long!\n"
+      }
+      if (!(/[A-Z]/.test(pass))) {
+        message+="Password has to contain at least one uppercase symbol!\n"
+      }
+      if (!(/[a-z]/.test(pass))) {
+        message+="Password has to contain at least one lowercase symbol!\n"
+      }
+      if (!(/\d/.test(pass))) {
+        message+="Password has to contain at least one number!\n"
+      }
+      if (!(/[!@#\$%\^\&*\)\(+=._-]/.test(pass))) {
+        message+="Password has to contain at least one special character!\n"
+      }
+      if (pass.replace(/\D/g, '').length > parseInt(pass.length/2)){
+        message+="Password should not be mostly numeric!\n"
+      }
+      this.setState({bad_pass_message:message})
+    }
+
+    componentWillMount() {
       let session_cookie = cookies.get('session_token')
       console.log(session_cookie)
       if (session_cookie){
@@ -48,6 +76,7 @@ class SignupForm extends React.Component {
     }
     handleChangeP(event) {
       this.setState({pass: event.target.value});
+      this.checkIfPassOk()
     }
     handleChangeE(event) {
         this.setState({email: event.target.value});
@@ -85,45 +114,44 @@ class SignupForm extends React.Component {
             }
           }
         }
-        if (found_empty){
+        if (found_empty || this.state.bad_pass_message!=""){
           this.setState({ checking: false });
         }
         else{
-        console.log(user)
-          fetch(
-          `https://api-gamersgazette.herokuapp.com/auth/signup`, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'text/plain'
-              },
-              body: JSON.stringify(user)
-              })
-              .then((res) => {
-                if (res.status == 409){
-                  this.setState({error: "The account with this data already exists, you need to sign in!", checking: false})
-                  return
-                }
-                return res.json()
-              })
-              .then((json) =>{
-                  console.log(json)
-                  console.log("sucessfully signed up!")  
-                  let d = new Date();
-                  d.setTime(d.getTime() + (30*60000));
-                  cookies.set(json.Name, json.Value, {expires: d, path: "/"});
-                  this.setState({ resp: json });
-              })
-              .catch((err)=>{
-                  console.log("Got error while signing up: "+err)
-                  this.setState({ err });
-                  })
-                }
-          event.preventDefault();
+          console.log(user)
+            fetch(
+            `https://api-gamersgazette.herokuapp.com/auth/signup`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                body: JSON.stringify(user)
+                })
+                .then((res) => {
+                  if (res.status == 409){
+                    this.setState({error: "The account with this data already exists, you need to sign in!", checking: false})
+                    return
+                  }
+                  return res.json()
+                })
+                .then((json) =>{
+                    console.log(json)
+                    console.log("sucessfully signed up!")  
+                    let d = new Date();
+                    d.setTime(d.getTime() + (30*60000));
+                    cookies.set(json.Name, json.Value, {expires: d, path: "/"});
+                    this.setState({ resp: json });
+                })
+                .catch((err)=>{
+                    console.log("Got error while signing up: "+err)
+                    this.setState({ err });
+                    })
+                  }
+            event.preventDefault();
         }
 
     render() {
-      let { mark_empty_name, mark_empty_pass, mark_empty_email, mark_empty_bdate, resp, error, checking, already_logged_in, soc_auth_link, session_checked } = this.state
-      // let style = {{border: mark_empty_name ? "4px red" : "border: 1px black" }}
+      let { mark_empty_name, mark_empty_pass, mark_empty_email, mark_empty_bdate, resp, error, checking, already_logged_in, soc_auth_link, session_checked, bad_pass_message} = this.state
       return (
           <div>
           {error && <strong>{error}</strong>}
@@ -143,6 +171,7 @@ class SignupForm extends React.Component {
             <label>
               <div style={{ color: mark_empty_pass ? "red" : "black" }}>Password:</div>
               <input style={{ border: mark_empty_pass ? "4px solid red" : "1px solid black" }} type="password" value={this.state.pass} onChange={this.handleChangeP} />
+              <div style={{color: "red"}}>bad_pass_message</div>
             </label>
             <label>
             <div style={{ color: mark_empty_email ? "red" : "black" }}>Email:</div>
