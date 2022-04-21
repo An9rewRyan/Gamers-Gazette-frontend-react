@@ -23,30 +23,6 @@ class SignupForm extends React.Component {
       this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    checkIfPassOk(){
-      let pass = this.state.pass
-      let message = ""
-      if (pass.length <12){
-        message+="Password has to be at least 12 characters long!\n"
-      }
-      if (!(/[A-Z]/.test(pass))) {
-        message+="Password has to contain at least one uppercase symbol!\n"
-      }
-      if (!(/[a-z]/.test(pass))) {
-        message+="Password has to contain at least one lowercase symbol!\n"
-      }
-      if (!(/\d/.test(pass))) {
-        message+="Password has to contain at least one number!\n"
-      }
-      if (!(/[!@#\$%\^\&*\)\(+=._-]/.test(pass))) {
-        message+="Password has to contain at least one special character!\n"
-      }
-      if (pass.replace(/\D/g, '').length > parseInt(pass.length/2)){
-        message+="Password should not be mostly numeric!\n"
-      }
-      this.setState({bad_pass_message:message})
-    }
-
     componentWillMount() {
       let session_cookie = cookies.get('session_token')
       console.log(session_cookie)
@@ -76,27 +52,27 @@ class SignupForm extends React.Component {
     }
     handleChangeP(event) {
       let pass = event.target.value
-      let message = ""
+      let message = {}
       if (pass.length <12){
-        message+="Password has to be at least 12 characters long!\n"
+        message.length="Password has to be at least 12 characters long!\n"
       }
       if (!(/[A-Z]/.test(pass))) {
-        message+="Password has to contain at least one uppercase symbol!\n"
+        message.upper="Password has to contain at least one uppercase symbol!\n"
       }
       if (!(/[a-z]/.test(pass))) {
-        message+="Password has to contain at least one lowercase symbol!\n"
+        message.lower="Password has to contain at least one lowercase symbol!\n"
       }
       if (!(/\d/.test(pass))) {
-        message+="Password has to contain at least one number!\n"
+        message.number="Password has to contain at least one number!\n"
       }
       if (!(/[!@#\$%\^\&*\)\(+=._-]/.test(pass))) {
-        message+="Password has to contain at least one special character!\n"
+        message.special="Password has to contain at least one special character!\n"
       }
       if (pass.replace(/\D/g, '').length > parseInt(pass.length/2)){
-        message+="Password should not be mostly numeric!\n"
+        message.mostly_number="Password should not be mostly numeric!\n"
       }
       this.setState({pass: event.target.value});
-      this.setState({bad_pass_message: message})
+      this.setState({bad_pass_message:message})
     }
     handleChangeE(event) {
         this.setState({email: event.target.value});
@@ -191,7 +167,16 @@ class SignupForm extends React.Component {
             <label>
               <div style={{ color: mark_empty_pass ? "red" : "black" }}>Password:</div>
               <input style={{ border: mark_empty_pass ? "4px solid red" : "1px solid black" }} type="password" value={this.state.pass} onChange={this.handleChangeP} />
-              <div style={{color: "red"}}>{bad_pass_message}</div>
+              {bad_pass_message && (
+                <div>
+                  <div style={{color: "red"}}>{bad_pass_message.length}</div>
+                  <div style={{color: "red"}}>{bad_pass_message.upper}</div>
+                  <div style={{color: "red"}}>{bad_pass_message.lower}</div>
+                  <div style={{color: "red"}}>{bad_pass_message.number}</div>
+                  <div style={{color: "red"}}>{bad_pass_message.special}</div>
+                  <div style={{color: "red"}}>{bad_pass_message.mostly_number}</div>
+                </div>
+              )}
             </label>
             <label>
             <div style={{ color: mark_empty_email ? "red" : "black" }}>Email:</div>
