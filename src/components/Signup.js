@@ -33,7 +33,7 @@ class SignupForm extends React.Component {
           })
             .then((res) =>{
               console.log(res.status)
-              if (res.status == 200){
+              if (res.status == 404){
                 this.setState({name_is_free: true})
               }
             })
